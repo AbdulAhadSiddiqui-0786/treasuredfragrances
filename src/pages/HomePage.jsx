@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import bgimage from "../../public/bgimg.svg"; // import your image
 
 export default function HomePage() {
   const launchDate = new Date("2025-12-01T00:00:00");
@@ -28,18 +27,20 @@ export default function HomePage() {
   }, [launchDate]);
 
   return (
-    <div className="relative min-h-screen flex flex-col items-center justify-center px-4 text-white">
-      {/* Background Image */}
-      <div
-        className="absolute inset-0 bg-cover bg-center opacity-30"
-        style={{ backgroundImage: `url(${bgImage})` }}
-      ></div>
+    <div className="relative min-h-screen flex flex-col items-center justify-center px-4 text-white overflow-hidden">
+      
+      {/* Background Image using img tag */}
+      <img
+        src="https://your-image-url.com/image.jpg" // <-- replace with your image URL
+        alt="Background"
+        className="absolute inset-0 w-full h-full object-cover opacity-30 z-0"
+      />
 
       {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 opacity-70"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 opacity-70 z-10"></div>
 
       {/* Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center">
+      <div className="relative z-20 flex flex-col items-center justify-center">
         <h1 className="text-4xl sm:text-5xl font-bold mb-4 animate-pulse">
           TreasureFragrance
         </h1>
