@@ -31,7 +31,7 @@ export default function HomePage() {
       
       {/* Background Image using img tag */}
       <img
-        src="https://your-image-url.com/image.jpg" // <-- replace with your image URL
+        src="https://github.com/AbdulAhadSiddiqui-0786/treasuredfragrances/blob/main/public/bgimg.svg" // <-- replace with your image URL
         alt="Background"
         className="absolute inset-0 w-full h-full object-cover opacity-30 z-0"
       />
