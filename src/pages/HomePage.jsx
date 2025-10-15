@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 
 export default function HomePage() {
   const launchDate = new Date("2025-12-01T00:00:00");
