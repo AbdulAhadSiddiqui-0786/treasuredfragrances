@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import bgImage from "./path-to-your-image.jpg"; // import your image
 
 export default function HomePage() {
   const launchDate = new Date("2025-12-01T00:00:00");
@@ -27,27 +28,39 @@ export default function HomePage() {
   }, [launchDate]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 text-white px-4">
-      <h1 className="text-4xl sm:text-5xl font-bold mb-4 animate-pulse">
-        TreasureFragrance
-      </h1>
-      <p className="text-xl sm:text-2xl mb-8">Launching Soon 🚀</p>
+    <div className="relative min-h-screen flex flex-col items-center justify-center px-4 text-white">
+      {/* Background Image */}
+      <div
+        className="absolute inset-0 bg-cover bg-center opacity-30"
+        style={{ backgroundImage: `url(${bgImage})` }}
+      ></div>
 
-      <div className="flex gap-4 text-center">
-        {["days", "hours", "minutes", "seconds"].map((unit) => (
-          <div
-            key={unit}
-            className="bg-white/20 backdrop-blur-md rounded-xl p-4 w-20 sm:w-24"
-          >
-            <p className="text-2xl sm:text-3xl font-bold">{timeLeft[unit]}</p>
-            <span className="uppercase text-sm sm:text-base">{unit}</span>
-          </div>
-        ))}
+      {/* Gradient overlay */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 opacity-70"></div>
+
+      {/* Content */}
+      <div className="relative z-10 flex flex-col items-center justify-center">
+        <h1 className="text-4xl sm:text-5xl font-bold mb-4 animate-pulse">
+          TreasureFragrance
+        </h1>
+        <p className="text-xl sm:text-2xl mb-8">Launching Soon 🚀</p>
+
+        <div className="flex gap-4 text-center">
+          {["days", "hours", "minutes", "seconds"].map((unit) => (
+            <div
+              key={unit}
+              className="bg-white/20 backdrop-blur-md rounded-xl p-4 w-20 sm:w-24"
+            >
+              <p className="text-2xl sm:text-3xl font-bold">{timeLeft[unit]}</p>
+              <span className="uppercase text-sm sm:text-base">{unit}</span>
+            </div>
+          ))}
+        </div>
+
+        <p className="text-center text-gray-500 fixed bottom-0 w-full py-2 bg-white">
+          © 2025 All Rights Reserved. mujeebakhtar70@gmail.com
+        </p>
       </div>
-      <p class="text-center text-gray-500 fixed bottom-0 w-full py-2 bg-white">
-  © 2025 All Rights Reserved.  mujeebakhtar70@gmail.com
-</p>
-
     </div>
   );
 }
