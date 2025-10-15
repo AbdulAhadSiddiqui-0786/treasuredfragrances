@@ -8,13 +8,13 @@ import Checkout from "../pages/Checkout";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import NotFound from "../pages/NotFound";
-import Header from "../components/layout/Header";
-import Footer from "../components/layout/Footer";
+// import Header from "../components/layout/Header";
+// import Footer from "../components/layout/Footer";
 
 const AppRoutes = () => {
   return (
     <Router>
-      <Header />
+      {/* <Header /> */}
       <main className="min-h-[80vh]">
         <Routes>
           <Route path="/" element={<HomePage />} />
@@ -27,7 +27,7 @@ const AppRoutes = () => {
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </Router>
   );
 };
