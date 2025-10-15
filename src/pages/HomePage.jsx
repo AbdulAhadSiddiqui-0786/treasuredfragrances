@@ -44,10 +44,10 @@ export default function HomePage() {
           </div>
         ))}
       </div>
+      <p class="text-center text-gray-500 fixed bottom-0 w-full py-2 bg-white">
+  © 2025 All Rights Reserved. Contact us: mujeebakhtar70@gmail.com
+</p>
 
-      <button className="mt-8 px-6 py-3 bg-white text-purple-600 font-semibold rounded-full shadow-lg hover:scale-105 transition-transform">
-        Notify Me
-      </button>
     </div>
   );
 }
