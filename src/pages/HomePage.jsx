@@ -45,7 +45,7 @@ export default function HomePage() {
         ))}
       </div>
       <p class="text-center text-gray-500 fixed bottom-0 w-full py-2 bg-white">
-  © 2025 All Rights Reserved. Contact us: mujeebakhtar70@gmail.com
+  © 2025 All Rights Reserved.  mujeebakhtar70@gmail.com
 </p>
 
     </div>
