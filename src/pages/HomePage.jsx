@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import bgImage from "./path-to-your-image.jpg"; // import your image
+import bgimage from "../../public/bgimg.svg"; // import your image
 
 export default function HomePage() {
   const launchDate = new Date("2025-12-01T00:00:00");
