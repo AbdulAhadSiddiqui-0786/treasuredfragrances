@@ -29,17 +29,17 @@ export default function HomePage() {
   return (
     <div className="relative min-h-screen flex flex-col items-center justify-center px-4 text-white overflow-hidden">
       
-      {/* Background Image using img tag */}
+      {/* Gradient behind */}
+      <div className="absolute inset-0 bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 opacity-70 z-0"></div>
+
+      {/* Background Image above gradient */}
       <img
-        src="https://github.com/AbdulAhadSiddiqui-0786/treasuredfragrances/blob/main/public/bgimg.svg" // <-- replace with your image URL
+        src="https://raw.githack.com/AbdulAhadSiddiqui-0786/treasuredfragrances/main/public/bgimg.svg"
         alt="Background"
-        className="absolute inset-0 w-full h-full object-cover opacity-30 z-0"
+        className="absolute inset-0 w-full h-full object-cover opacity-50 z-10"
       />
 
-      {/* Gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-br from-purple-500 via-pink-500 to-red-500 opacity-70 z-10"></div>
-
-      {/* Content */}
+      {/* Content on top of image */}
       <div className="relative z-20 flex flex-col items-center justify-center">
         <h1 className="text-4xl sm:text-5xl font-bold mb-4 animate-pulse">
           TreasureFragrance
