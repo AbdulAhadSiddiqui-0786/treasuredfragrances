@@ -37,7 +37,7 @@ const HeroSection = () => (
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 mb-8">
           <HiSparkles className="text-amber-400" />
-          <span className="text-sm font-medium text-white">Luxury Fragrance Collection 2024</span>
+       
         </div>
 
         {/* Main Heading */}
