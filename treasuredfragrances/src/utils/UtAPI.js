@@ -1,6 +1,6 @@
 export async function deleteFileFromUploadthing(key) {
   try {
-    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/upload/delete`, {
+    const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/upload/delete`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
