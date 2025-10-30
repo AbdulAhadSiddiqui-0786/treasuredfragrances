@@ -43,7 +43,7 @@ const Login = () => {
       showNotification("success", "Welcome back! Redirecting...");
       
       setTimeout(() => {
-        navigate("/");
+        navigate("/admin");
       }, 1500);
     } catch (err) {
       showNotification("error", err.response?.data?.error || "Login failed. Please try again.");
