@@ -114,7 +114,7 @@ const CollectionsSection = () => {
     {
       name: "Fresh Citrus",
       description: "Vibrant & energizing freshness",
-      image: "/FreshCitrus",
+      image: "/FreshCitrus.png",
       color: "from-emerald-500/20 to-teal-500/20"
     },
     {
