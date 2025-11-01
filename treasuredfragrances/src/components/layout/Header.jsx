@@ -9,7 +9,6 @@ import {
   Moon,
   Sun,
   User,
-  Search,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -40,8 +39,8 @@ const Header = () => {
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
-          ? "bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg shadow-lg border-b border-stone-200 dark:border-neutral-800"
-          : "bg-transparent"
+        ? "bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg shadow-lg border-b border-stone-200 dark:border-neutral-800"
+        : "bg-transparent"
         }`}
     >
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
@@ -83,10 +82,6 @@ const Header = () => {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-4">
-            <button className="p-2 rounded-full hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors">
-              <Search size={20} className="text-stone-700 dark:text-stone-300" />
-            </button>
-
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-full hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors"
