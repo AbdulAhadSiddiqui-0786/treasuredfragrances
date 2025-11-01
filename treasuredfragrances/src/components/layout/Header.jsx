@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDarkMode } from "../../context/DarkModeContext";
-import { useAuth } from "../../context/AuthContext"; // Correct path
+import { useAuth } from "../../context/AuthContext";
 import {
   Menu,
   X,
@@ -10,30 +10,28 @@ import {
   Sun,
   User,
   Search,
-  Settings, // Added
-  LogOut, // Added
+  Settings,
+  LogOut,
 } from "lucide-react";
-import { AnimatePresence, motion } from "framer-motion"; // Added motion
+import { AnimatePresence, motion } from "framer-motion";
 import { HiSparkles } from "react-icons/hi";
 
 const Header = () => {
   const { darkMode, toggleDarkMode } = useDarkMode();
-  const { user, isLoggedIn, logout } = useAuth(); // Added 'user'
+  const { user, isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const handleLogout = () => {
     logout();
-    navigate("/"); // <-- CHANGED: Redirect to Home
+    navigate("/");
     setMenuOpen(false);
   };
 
@@ -41,17 +39,20 @@ const Header = () => {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${
-        scrolled
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${scrolled
           ? "bg-white/95 dark:bg-neutral-900/95 backdrop-blur-lg shadow-lg border-b border-stone-200 dark:border-neutral-800"
           : "bg-transparent"
-      }`}
+        }`}
     >
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
-          {/* ... (Logo remains the same) ... */}
+          {/* Logo */}
           <Link to="/" className="flex items-center gap-2 group">
-            <img src="/android-chrome-512x512.png" alt="Logo" className="w-15 h-15 rounded-full object-cover" />
+            <img
+              src="/android-chrome-512x512.png"
+              alt="Logo"
+              className="w-15 h-15 rounded-full object-cover"
+            />
             <div className="flex flex-col">
               <span className="text-xl md:text-2xl font-light tracking-wider text-stone-900 dark:text-white">
                 TREASURED
@@ -62,7 +63,7 @@ const Header = () => {
             </div>
           </Link>
 
-          {/* ... (Desktop Navigation remains the same) ... */}
+          {/* Desktop Navigation */}
           <nav className="hidden lg:flex items-center space-x-8">
             <Link
               to="/"
@@ -82,10 +83,10 @@ const Header = () => {
 
           {/* Desktop Actions */}
           <div className="hidden lg:flex items-center gap-4">
-            {/* ... (Search and Dark Mode Toggle remain the same) ... */}
             <button className="p-2 rounded-full hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors">
               <Search size={20} className="text-stone-700 dark:text-stone-300" />
             </button>
+
             <button
               onClick={toggleDarkMode}
               className="p-2 rounded-full hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors"
@@ -97,8 +98,7 @@ const Header = () => {
               )}
             </button>
 
-
-            {/* --- MODIFIED: Login/Logout Logic --- */}
+            {/* Admin Login / Dashboard */}
             {isLoggedIn && user?.role === "admin" ? (
               <div className="relative group">
                 <button className="flex items-center gap-2 px-4 py-2 rounded-full bg-stone-100 dark:bg-neutral-800 hover:bg-stone-200 dark:hover:bg-neutral-700 transition-colors">
@@ -131,27 +131,41 @@ const Header = () => {
                 to="/login"
                 className="px-6 py-2 bg-black dark:bg-white text-white dark:text-black rounded-full text-sm font-medium hover:bg-amber-600 hover:text-white dark:hover:bg-amber-600 transition-all duration-300 hover:scale-105 shadow-md"
               >
-                Admin Login {/* <-- CHANGED */}
+                Admin Login
               </Link>
             )}
-            {/* --- END OF MODIFICATION --- */}
           </div>
 
-          {/* ... (Mobile Menu Button remains the same) ... */}
-           <button
-            className="lg:hidden p-2 rounded-lg hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors"
-            onClick={toggleMenu}
-          >
-            {menuOpen ? (
-              <X className="w-6 h-6 text-stone-700 dark:text-stone-300" />
-            ) : (
-              <Menu className="w-6 h-6 text-stone-700 dark:text-stone-300" />
-            )}
-          </button>
+          {/* Mobile Actions */}
+          <div className="flex items-center gap-2 lg:hidden">
+            {/* Dark Mode Toggle (Mobile Top) */}
+            <button
+              onClick={toggleDarkMode}
+              className="p-2 rounded-lg hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors"
+            >
+              {darkMode ? (
+                <Moon size={20} className="text-stone-700 dark:text-stone-300" />
+              ) : (
+                <Sun size={20} className="text-stone-700 dark:text-stone-300" />
+              )}
+            </button>
+
+            {/* Mobile Menu Button */}
+            <button
+              className="p-2 rounded-lg hover:bg-stone-100 dark:hover:bg-neutral-800 transition-colors"
+              onClick={toggleMenu}
+            >
+              {menuOpen ? (
+                <X className="w-6 h-6 text-stone-700 dark:text-stone-300" />
+              ) : (
+                <Menu className="w-6 h-6 text-stone-700 dark:text-stone-300" />
+              )}
+            </button>
+          </div>
         </div>
       </div>
 
-      {/* --- MODIFIED: Mobile Menu --- */}
+      {/* Mobile Menu */}
       <AnimatePresence>
         {menuOpen && (
           <>
@@ -198,23 +212,15 @@ const Header = () => {
                 >
                   Collections
                 </Link>
-                {/* --- REMOVED About, Wishlist, Cart --- */}
               </nav>
 
+              {/* Login / Dashboard (Only) */}
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-stone-50 dark:bg-neutral-800 border-t border-stone-200 dark:border-neutral-700">
-                <button
-                  onClick={toggleDarkMode}
-                  className="w-full mb-3 px-4 py-3 rounded-lg border border-stone-300 dark:border-neutral-600 hover:bg-stone-100 dark:hover:bg-neutral-700 transition-colors flex items-center justify-center gap-2"
-                >
-                  {/* ... (dark mode toggle icon) ... */}
-                </button>
-
-                {/* Login/Logout */}
                 {isLoggedIn && user?.role === "admin" ? (
                   <Link
                     to="/admin"
                     onClick={() => setMenuOpen(false)}
-                    className="w-full mb-3 px-4 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors text-center"
+                    className="block w-full px-4 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors text-center"
                   >
                     Admin Dashboard
                   </Link>
