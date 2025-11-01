@@ -209,16 +209,24 @@ const Header = () => {
                 </Link>
               </nav>
 
-              {/* Login / Dashboard (Only) */}
+              {/* Login / Dashboard (Only) --- MODIFIED BLOCK --- */}
               <div className="absolute bottom-0 left-0 right-0 p-6 bg-stone-50 dark:bg-neutral-800 border-t border-stone-200 dark:border-neutral-700">
                 {isLoggedIn && user?.role === "admin" ? (
-                  <Link
-                    to="/admin"
-                    onClick={() => setMenuOpen(false)}
-                    className="block w-full px-4 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors text-center"
-                  >
-                    Admin Dashboard
-                  </Link>
+                  <div className="space-y-2">
+                    <Link
+                      to="/admin"
+                      onClick={() => setMenuOpen(false)}
+                      className="block w-full px-4 py-3 bg-amber-600 text-white rounded-lg font-medium hover:bg-amber-700 transition-colors text-center"
+                    >
+                      Admin Dashboard
+                    </Link>
+                    <button
+                      onClick={handleLogout}
+                      className="block w-full px-4 py-3 text-red-600 dark:text-red-400 hover:bg-red-50 dark:hover:bg-red-900/20 transition-colors rounded-lg font-medium text-center border border-red-200 dark:border-red-900/30"
+                    >
+                      Logout
+                    </button>
+                  </div>
                 ) : (
                   <Link
                     to="/login"
