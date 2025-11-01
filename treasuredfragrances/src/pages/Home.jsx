@@ -117,12 +117,6 @@ const CollectionsSection = () => {
       image: "/oriental.png",
       color: "from-emerald-500/20 to-teal-500/20"
     },
-    {
-      name: "Oriental Spice",
-      description: "Exotic & mysterious allure",
-      image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?q=80&w=800",
-      color: "from-purple-500/20 to-violet-500/20"
-    }
   ];
 
   return (
