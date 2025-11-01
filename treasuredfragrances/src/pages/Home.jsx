@@ -102,19 +102,19 @@ const CollectionsSection = () => {
     {
       name: "Floral Essence",
       description: "Delicate & romantic garden blooms",
-      image: "https://images.unsplash.com/photo-1547887537-6158d64c35b3?q=80&w=800",
+      image: "/Floral.png",
       color: "from-rose-500/20 to-pink-500/20"
     },
     {
       name: "Woody Notes",
       description: "Warm & sophisticated earthiness",
-      image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?q=80&w=800",
+      image: "/woddy.jpg",
       color: "from-amber-500/20 to-orange-500/20"
     },
     {
       name: "Fresh Citrus",
       description: "Vibrant & energizing freshness",
-      image: "https://images.unsplash.com/photo-1590736969955-71cc94901144?q=80&w=800",
+      image: "/oriental.png",
       color: "from-emerald-500/20 to-teal-500/20"
     },
     {
@@ -306,7 +306,7 @@ const WhyChooseUsSection = () => {
   ];
 
   return (
-    <section className="py-24 dark:bg-black dark:bg-neutral-950 ">
+    <section className="py-24 dark:bg-black  ">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-4">
