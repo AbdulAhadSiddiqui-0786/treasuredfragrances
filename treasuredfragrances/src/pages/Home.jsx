@@ -114,9 +114,15 @@ const CollectionsSection = () => {
     {
       name: "Fresh Citrus",
       description: "Vibrant & energizing freshness",
-      image: "/oriental.png",
+      image: "/FreshCitrus",
       color: "from-emerald-500/20 to-teal-500/20"
     },
+    {
+      name: "Oriental Spice",
+      description: "Exotic & mysterious allure",
+      image: "/oriental.png",
+      color: "from-purple-500/20 to-violet-500/20"
+    }
   ];
 
   return (
