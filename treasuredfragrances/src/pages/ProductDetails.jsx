@@ -1,10 +1,9 @@
 // src/pages/ProductDetail.jsx
+import { motion, AnimatePresence } from 'framer-motion';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   ArrowLeft,
-  Heart,
   Share2,
   ShoppingBag,
   Star,
@@ -18,8 +17,6 @@ import {
   ChevronDown,
   ChevronUp,
   X,
-  Facebook,
-  Twitter,
   Link2,
   Mail,
   Package,
@@ -44,6 +41,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import axiosInstance from '@/api/axiosInstance';
 
 const ProductDetail = () => {
   const { name } = useParams();
@@ -51,23 +49,14 @@ const ProductDetail = () => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [quantity, setQuantity] = useState(1);
-  const [isWishlisted, setIsWishlisted] = useState(false);
+
   const [selectedImage, setSelectedImage] = useState(0);
   const [showShareModal, setShowShareModal] = useState(false);
   const [showContactDialog, setShowContactDialog] = useState(false);
   const [notification, setNotification] = useState(null);
-  const [activeTab, setActiveTab] = useState('description');
-  const [relatedProducts, setRelatedProducts] = useState([]);
-  
-  // Contact Form State
-  const [contactForm, setContactForm] = useState({
-    name: '',
-    email: '',
-    phone: '',
-    message: '',
-  });
-  const [sendingMessage, setSendingMessage] = useState(false);
+
+
+
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -75,21 +64,13 @@ const ProductDetail = () => {
         setLoading(true);
         const decodedName = decodeURIComponent(name);
 
-        const res = await fetch(
-          `${import.meta.env.VITE_API_URL}/products/name/${encodeURIComponent(decodedName)}`
-        );
+        const res = await axiosInstance.get(`/products/name/${encodeURIComponent(decodedName)}`);
 
-        if (!res.ok) {
-          if (res.status === 404) {
-            throw new Error('Product not found');
-          }
-          throw new Error('Failed to fetch product');
-        }
 
-        const data = await res.json();
-        setProduct(data);
 
-        fetchRelatedProducts(data.category, data._id);
+        setProduct(res.data);
+
+
       } catch (err) {
         setError(err.message);
         console.error('Error fetching product:', err);
@@ -104,64 +85,30 @@ const ProductDetail = () => {
     }
   }, [name]);
 
-  const fetchRelatedProducts = async (category, currentProductId) => {
-    try {
-      const res = await fetch(`${import.meta.env.VITE_API_URL}/products`);
-      if (res.ok) {
-        const data = await res.json();
-        const related = data
-          .filter(p => p.category === category && p._id !== currentProductId)
-          .slice(0, 4);
-        setRelatedProducts(related);
-      }
-    } catch (err) {
-      console.error('Error fetching related products:', err);
-    }
-  };
+
 
   const showNotification = (message, type = 'success') => {
     setNotification({ message, type });
     setTimeout(() => setNotification(null), 3000);
   };
 
-  const handleAddToCart = () => {
-    showNotification(`Added ${quantity} item(s) to cart!`, 'success');
-  };
 
-  const handleWishlist = () => {
-    setIsWishlisted(!isWishlisted);
-    showNotification(
-      isWishlisted ? 'Removed from wishlist' : 'Added to wishlist!',
-      'success'
-    );
-  };
 
-  const handleContactFormChange = (e) => {
-    setContactForm({
-      ...contactForm,
-      [e.target.name]: e.target.value,
-    });
-  };
 
-  const handleContactSubmit = async (e) => {
-    e.preventDefault();
-    setSendingMessage(true);
 
-    // Simulate sending message
-    setTimeout(() => {
-      setSendingMessage(false);
-      setShowContactDialog(false);
-      showNotification('Message sent successfully! We\'ll get back to you soon.', 'success');
-      setContactForm({ name: '', email: '', phone: '', message: '' });
-    }, 1500);
-  };
+
+
+
+
+  // Simulate sending message
+
 
   const handleCallNow = () => {
     window.location.href = 'tel:+918178036494';
   };
 
   const handleEmailNow = () => {
-    window.location.href = 'mailto:hello@treasured.com';
+    window.location.href = 'mailto:ujeebakhtar70@gmail.com';
   };
 
   const handleWhatsApp = () => {
@@ -189,17 +136,8 @@ const ProductDetail = () => {
     }
   };
 
-  const incrementQuantity = () => {
-    if (product && quantity < product.countInStock) {
-      setQuantity(quantity + 1);
-    }
-  };
 
-  const decrementQuantity = () => {
-    if (quantity > 1) {
-      setQuantity(quantity - 1);
-    }
-  };
+
 
   if (loading) {
     return (
@@ -236,8 +174,7 @@ const ProductDetail = () => {
 
   if (!product) return null;
 
-  const rating = product.rating || 4.8;
-  const reviewCount = product.reviewCount || 234;
+
   const images = product.images || [product.img];
 
   return (
@@ -249,11 +186,10 @@ const ProductDetail = () => {
             initial={{ opacity: 0, y: -50 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -50 }}
-            className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl ${
-              notification.type === 'success'
+            className={`fixed top-6 right-6 z-50 flex items-center gap-3 px-6 py-4 rounded-xl shadow-2xl ${notification.type === 'success'
                 ? 'bg-emerald-500 text-white'
                 : 'bg-red-500 text-white'
-            }`}
+              }`}
           >
             <Check size={20} />
             <span className="font-medium">{notification.message}</span>
@@ -292,8 +228,6 @@ const ProductDetail = () => {
 
               <div className="grid grid-cols-2 gap-3">
                 {[
-                  { id: 'facebook', icon: Facebook, label: 'Facebook', color: 'bg-blue-600' },
-                  { id: 'twitter', icon: Twitter, label: 'Twitter', color: 'bg-sky-500' },
                   { id: 'email', icon: Mail, label: 'Email', color: 'bg-stone-600' },
                   { id: 'copy', icon: Link2, label: 'Copy Link', color: 'bg-amber-600' },
                 ].map((platform) => (
@@ -373,16 +307,7 @@ const ProductDetail = () => {
 
               {/* Quick Actions */}
               <div className="absolute bottom-6 right-6 flex gap-2">
-                <button
-                  onClick={handleWishlist}
-                  className={`p-3 rounded-full backdrop-blur-md shadow-lg transition-all ${
-                    isWishlisted
-                      ? 'bg-rose-500 text-white'
-                      : 'bg-white/90 dark:bg-neutral-800/90 text-stone-700 dark:text-stone-300 hover:bg-rose-500 hover:text-white'
-                  }`}
-                >
-                  <Heart size={20} fill={isWishlisted ? 'currentColor' : 'none'} />
-                </button>
+
                 <button
                   onClick={() => setShowShareModal(true)}
                   className="p-3 bg-white/90 dark:bg-neutral-800/90 backdrop-blur-md text-stone-700 dark:text-stone-300 rounded-full hover:bg-amber-500 hover:text-white transition-all shadow-lg"
@@ -399,11 +324,10 @@ const ProductDetail = () => {
                   <button
                     key={index}
                     onClick={() => setSelectedImage(index)}
-                    className={`relative rounded-lg overflow-hidden aspect-square border-2 transition-all ${
-                      selectedImage === index
+                    className={`relative rounded-lg overflow-hidden aspect-square border-2 transition-all ${selectedImage === index
                         ? 'border-amber-500 scale-95'
                         : 'border-transparent hover:border-stone-300 dark:hover:border-neutral-600'
-                    }`}
+                      }`}
                   >
                     <img
                       src={img}
@@ -434,7 +358,7 @@ const ProductDetail = () => {
               <h1 className="text-3xl md:text-4xl font-light text-stone-900 dark:text-white mb-4 leading-tight">
                 {product.name}
               </h1>
-              
+
 
               {/* Price */}
               <div className="flex items-baseline gap-4 mb-6">
@@ -457,14 +381,13 @@ const ProductDetail = () => {
             </div>
 
             {/* Stock Info */}
-            {product.countInStock > 0 && (
+            {product.isAvailable && (
               <div className="flex items-center gap-2 text-sm">
                 <Check className="text-emerald-500" size={18} />
                 <span className="text-stone-600 dark:text-stone-400">
                   <span className="font-medium text-emerald-600 dark:text-emerald-400">
-                    {product.countInStock}
+                    {product.isAvailable ? "In Stock" : "Currently Unavailable"}
                   </span>{' '}
-                  items available
                 </span>
               </div>
             )}
@@ -551,12 +474,18 @@ const ProductDetail = () => {
                             <p className="font-medium text-stone-900 dark:text-white">
                               Phone
                             </p>
-                            <a
-                              href="tel:+918178036494"
-                              className="text-stone-600 dark:text-stone-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
-                            >
-                              +91 8178036494
-                            </a>
+                            <div className="flex flex-col">
+                              <a href="tel:+918178036494" className="text-stone-400 hover:text-amber-400 transition-colors">
+                                +91 8178036494
+
+
+                              </a>
+                              <a href="tel:+917007607290" className="text-stone-400 hover:text-amber-400 transition-colors">
+                                +91 7007607290
+
+                              </a>
+                            </div>
+
                           </div>
                         </div>
 
@@ -567,10 +496,10 @@ const ProductDetail = () => {
                               Email
                             </p>
                             <a
-                              href="mailto:hello@treasured.com"
+                              href="mailto:ujeebakhtar70@gmail.com"
                               className="text-stone-600 dark:text-stone-400 hover:text-amber-600 dark:hover:text-amber-400 transition-colors"
                             >
-                              hello@treasured.com
+                              info@treasuredfragrances.in
                             </a>
                           </div>
                         </div>
@@ -582,8 +511,8 @@ const ProductDetail = () => {
                               Location
                             </p>
                             <p className="text-stone-600 dark:text-stone-400">
-                              123 Fragrance Avenue,<br />
-                              Luxury District, NY 10001
+                              180/1, SultanPur Bhawa, Roshan Bagh,<br></br>
+                              Prayagraj, Uttar Pradesh 211003
                             </p>
                           </div>
                         </div>

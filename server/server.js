@@ -32,7 +32,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN?.split(',') || '*',
+    origin: [
+      "http://localhost:5173",           // your local frontend
+      "https://treasuredfragrances.in",  // your production frontend
+    ],
     credentials: true,
   })
 );

@@ -1,4 +1,5 @@
-﻿const mongoose = require('mongoose');
+﻿// src/models/User.js
+const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const userSchema = new mongoose.Schema(
@@ -18,23 +19,25 @@ const userSchema = new mongoose.Schema(
       required: [true, 'Password is required'],
       minlength: 6,
     },
-    cart: [
-      {
-        productId: {
-          type: mongoose.Schema.Types.ObjectId,
-          ref: 'Product',
-        },
-        quantity: {
-          type: Number,
-          default: 1,
-        },
-      },
-    ],
+    role: {
+      type: String,
+      enum: ['admin'],
+      default: 'admin',
+    },
+    
+    // --- ADD THESE TWO FIELDS ---
+    resetPasswordCode: {
+      type: String,
+    },
+    resetPasswordExpires: {
+      type: Date,
+    },
+    // --- END OF ADDED FIELDS ---
   },
   { timestamps: true }
 );
 
-// Encrypt password before saving
+// ... (your pre-save hook and matchPassword method remain unchanged) ...
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
   const salt = await bcrypt.genSalt(10);
@@ -42,7 +45,6 @@ userSchema.pre('save', async function (next) {
   next();
 });
 
-// Compare password
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };

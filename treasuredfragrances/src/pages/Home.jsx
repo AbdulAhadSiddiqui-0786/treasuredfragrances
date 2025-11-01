@@ -1,5 +1,6 @@
 // src/pages/Home.js
 import React, { useState, useEffect } from "react";
+import axiosInstance from "../api/axiosInstance";
 import { Link } from "react-router-dom";
 import { FiArrowRight, FiSend, FiCheckCircle } from "react-icons/fi";
 import { 
@@ -14,15 +15,15 @@ import ProductCard from "../components/products/ProductCard";
 
 // --- Hero Section ---
 const HeroSection = () => (
-  <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-gradient-to-br from-stone-900 via-neutral-900 to-black">
+  <section className="relative min-h-screen flex items-center justify-center overflow-hidden dark:bg-gradient-to-br dark:from-stone-900 dark:via-neutral-900 dark:to-black ">
     {/* Background Image with Overlay */}
     <div className="absolute inset-0 z-0">
       <img 
-        src="https://images.unsplash.com/photo-1541643600914-78b084683601?q=80&w=2000"
+        src="/background.png"
         alt="Luxury Perfume"
         className="w-full h-full object-cover opacity-30"
       />
-      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent"></div>
+      <div className="absolute inset-0 bg-gradient-to-t dark:from-black dark:via-black/50 to-transparent from-black via-black/50"></div>
     </div>
 
     {/* Floating Elements */}
@@ -41,17 +42,16 @@ const HeroSection = () => (
         </div>
 
         {/* Main Heading */}
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-tight text-white mb-6">
-          Discover Your
+        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold  tracking-tight dark:text-white mb-6">
+          Unveil your scented 
           <span className="block font-serif italic text-transparent bg-clip-text bg-gradient-to-r from-amber-200 via-amber-400 to-amber-200 mt-2">
-            Signature Scent
+           Treasure
           </span>
         </h1>
 
         {/* Subheading */}
         <p className="text-lg md:text-xl text-stone-300 max-w-2xl mx-auto mb-12 leading-relaxed">
-          Immerse yourself in an exquisite collection of artisanal fragrances, 
-          crafted with the finest ingredients from around the world.
+           Immerse yourself in an exquisite collection of artisanal fragrances, crafted with the finest ingredients from around the world.
         </p>
 
         {/* CTA Buttons */}
@@ -63,19 +63,19 @@ const HeroSection = () => (
             Explore Collection
             <FiArrowRight className="group-hover:translate-x-1 transition-transform" />
           </Link>
-          <Link 
-            to="/about"
+          <a 
+            href="#Story"
             className="px-8 py-4 bg-transparent text-white font-medium rounded-full border-2 border-white/30 hover:border-white hover:bg-white/10 backdrop-blur-sm transition-all duration-300"
           >
             Our Story
-          </Link>
+          </a>
         </div>
 
         {/* Stats */}
         <div className="grid grid-cols-3 gap-8 max-w-3xl mx-auto mt-20 pt-12 border-t border-white/10">
           {[
-            { number: "100+", label: "Unique Fragrances" },
-            { number: "50K+", label: "Happy Customers" },
+            { number: "200+", label: "Unique Fragrances" },
+            { number: "2K+", label: "Happy Customers" },
             { number: "25+", label: "Awards Won" }
           ].map((stat, index) => (
             <div key={index} className="text-center">
@@ -223,11 +223,6 @@ const BrandStorySection = () => (
           <div className="absolute -top-6 -left-6 w-72 h-72 bg-amber-200/30 rounded-full blur-3xl"></div>
           <div className="relative grid grid-cols-2 gap-4">
             <img 
-              src="https://images.unsplash.com/photo-1588405748880-12d1d2a59d75?q=80&w=600"
-              alt="Perfume crafting"
-              className="rounded-2xl shadow-2xl col-span-2"
-            />
-            <img 
               src="https://images.unsplash.com/photo-1595425970377-c9703cf48b6d?q=80&w=600"
               alt="Ingredients"
               className="rounded-2xl shadow-xl"
@@ -241,7 +236,7 @@ const BrandStorySection = () => (
         </div>
 
         {/* Content Side */}
-        <div>
+        <div id="Story">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white dark:bg-neutral-700 shadow-md text-sm font-medium mb-6">
             <HiHeart className="text-rose-500" />
             Our Story
@@ -255,7 +250,7 @@ const BrandStorySection = () => (
           </h2>
 
           <p className="text-lg text-stone-600 dark:text-stone-300 mb-6 leading-relaxed">
-            For over two decades, we've been creating exceptional fragrances that capture 
+            For over many years, we've been creating exceptional fragrances that capture 
             the essence of luxury and sophistication. Each bottle is a masterpiece, 
             blending rare ingredients with artisanal expertise.
           </p>
@@ -268,7 +263,7 @@ const BrandStorySection = () => (
           {/* Features */}
           <div className="space-y-4 mb-8">
             {[
-              "100% natural & sustainable ingredients",
+              "Sustainable ingredients",
               "Handcrafted by master perfumers",
               "Cruelty-free & eco-conscious",
               "Exclusive limited editions"
@@ -279,14 +274,6 @@ const BrandStorySection = () => (
               </div>
             ))}
           </div>
-
-          <Link 
-            to="/about"
-            className="inline-flex items-center gap-2 text-amber-700 dark:text-amber-400 font-medium hover:gap-4 transition-all duration-300"
-          >
-            Learn More About Us
-            <FiArrowRight />
-          </Link>
         </div>
       </div>
     </div>
@@ -299,7 +286,7 @@ const WhyChooseUsSection = () => {
     {
       icon: <HiTruck className="text-4xl" />,
       title: "Free Shipping",
-      description: "Complimentary delivery on orders over $100"
+      description: "Free delivery on orders over  ₹500"
     },
     {
       icon: <HiShieldCheck className="text-4xl" />,
@@ -319,7 +306,7 @@ const WhyChooseUsSection = () => {
   ];
 
   return (
-    <section className="py-24 bg-black dark:bg-neutral-950 text-white">
+    <section className="py-24 dark:bg-black dark:bg-neutral-950 ">
       <div className="container mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-light tracking-tight mb-4">
@@ -359,12 +346,8 @@ const Home = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/products`);
-        if (!res.ok) {
-          throw new Error('Failed to fetch products');
-        }
-        const data = await res.json();
-        setFeaturedProducts(data.slice(0, 4));
+      const res = await axiosInstance.get("/products");
+        setFeaturedProducts(res.data.slice(0, 4));
       } catch (err) {
         setError(err.message);
         console.error(err);

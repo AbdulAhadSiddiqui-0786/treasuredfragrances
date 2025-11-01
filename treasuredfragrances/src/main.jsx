@@ -2,18 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import App from "./App";
 import "./index.css";
-import { CartProvider } from "./context/CartContext";
 import { DarkModeProvider } from "./context/DarkModeContext";
 import { AuthProvider } from "./context/AuthContext";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-    <DarkModeProvider>
-       <AuthProvider>
-        <CartProvider>
-        <App />
-        </CartProvider>
-      </AuthProvider>
+    <AuthProvider>
+    <DarkModeProvider>   
+      <App />
     </DarkModeProvider>
-
+    </AuthProvider>
 );
-//  / /src/main.jsx

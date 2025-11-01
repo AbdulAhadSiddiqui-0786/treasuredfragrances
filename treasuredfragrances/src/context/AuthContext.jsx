@@ -1,44 +1,69 @@
+// src/context/AuthContext.js
 import React, { createContext, useContext, useState, useEffect } from "react";
-import axiosInstance from "../api/axiosInstance"; // Import your axios instance
-
-// 1. Initialize token state from localStorage
-const getInitialToken = () => localStorage.getItem("token") || null;
+import { jwtDecode } from "jwt-decode";
+import axiosInstance from "../api/axiosInstance";
 
 const AuthContext = createContext();
 
+export const useAuth = () => useContext(AuthContext);
+
 export const AuthProvider = ({ children }) => {
-  // 2. Store the token in state, not just a boolean
-  const [token, setToken] = useState(getInitialToken());
+  const [authToken, setAuthToken] = useState(localStorage.getItem("token"));
+  const [user, setUser] = useState(null);
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [loading, setLoading] = useState(true);
 
-  // 3. Derive isLoggedIn from the token state
-  const isLoggedIn = !!token;
-
-  // 4. Set the token on the axios instance whenever it changes
-  // This ensures all API calls are authenticated after login.
   useEffect(() => {
-    if (token) {
-      axiosInstance.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-    } else {
-      delete axiosInstance.defaults.headers.common["Authorization"];
+    if (authToken) {
+      try {
+        const decoded = jwtDecode(authToken);
+        
+        // Check if token is expired
+        if (decoded.exp * 1000 < Date.now()) {
+          logout();
+        } else {
+          setUser({ id: decoded.id, role: decoded.role });
+          setIsLoggedIn(true);
+          axiosInstance.defaults.headers.common[
+            "Authorization"
+          ] = `Bearer ${authToken}`;
+        }
+      } catch (error) {
+        console.error("Invalid token:", error);
+        logout();
+      }
     }
-  }, [token]);
+    setLoading(false);
+  }, [authToken]);
 
-  const login = (newToken) => {
-    localStorage.setItem("token", newToken);
-    setToken(newToken);
+  const login = (token) => {
+    localStorage.setItem("token", token);
+    setAuthToken(token);
+    setIsLoggedIn(true);
+    const decoded = jwtDecode(token);
+    setUser({ id: decoded.id, role: decoded.role });
   };
 
   const logout = () => {
     localStorage.removeItem("token");
-    setToken(null);
+    setAuthToken(null);
+    setUser(null);
+    setIsLoggedIn(false);
+    delete axiosInstance.defaults.headers.common["Authorization"];
   };
 
-  // 5. Provide both `isLoggedIn` and the `token` itself
+  const value = {
+    user,
+    isLoggedIn,
+    login,
+    logout,
+    loading,
+  };
+
+  // Don't render children until we've checked for a token
   return (
-    <AuthContext.Provider value={{ isLoggedIn, token, login, logout }}>
-      {children}
+    <AuthContext.Provider value={value}>
+      {!loading && children}
     </AuthContext.Provider>
   );
 };
-
-export const useAuth = () => useContext(AuthContext);

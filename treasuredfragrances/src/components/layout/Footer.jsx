@@ -28,7 +28,7 @@ const Footer = () => {
       <div className="relative w-full h-96 bg-stone-800 dark:bg-neutral-950 overflow-hidden">
         {/* Map Overlay with Info */}
         <div className="absolute inset-0 z-10 pointer-events-none">
-          <div className="absolute top-8 left-8 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md rounded-2xl p-6 shadow-2xl max-w-sm pointer-events-auto">
+          <div className="absolute top-8 right-8 bg-white/95 dark:bg-neutral-900/95 backdrop-blur-md rounded-2xl p-6 shadow-2xl max-w-sm pointer-events-auto">
             <div className="flex items-center gap-3 mb-4">
               <div className="p-3 bg-amber-500 rounded-full">
                 <FiMapPin className="text-white" size={24} />
@@ -99,7 +99,7 @@ const Footer = () => {
           {/* Brand Column */}
           <div className="space-y-6">
             <div className="flex items-center gap-2">
-              <HiSparkles className="text-2xl text-amber-400" />
+              <img src="/android-chrome-512x512.png" alt="Treasured Fragrances Logo" className="w-12 h-12 rounded-full object-cover" />
               <div className="flex flex-col">
                 <span className="text-xl font-light tracking-wider text-white">
                   TREASURED
@@ -123,9 +123,10 @@ const Footer = () => {
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label={social.label}
-                  className="p-2 rounded-full bg-white/5 hover:bg-amber-600 text-stone-400 hover:text-white transition-all duration-300 hover:scale-110"
+                  className=" flex items-center gap-2 text-yellow-400 p-2 rounded-full bg-white/5 hover:bg-amber-600 text-stone-400 hover:text-white transition-all duration-300 hover:scale-110"
                 >
                   <social.icon size={32} />
+                  @treasured_fragrances
                 </a>
               ))}
             </div>
@@ -170,14 +171,22 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-3 text-sm">
                 <FiPhone className="text-amber-400 flex-shrink-0" size={18} />
+                <div className="flex flex-col">
                 <a href="tel:+918178036494" className="text-stone-400 hover:text-amber-400 transition-colors">
                   +91 8178036494
+                
+
                 </a>
+                <a href="tel:+917007607290" className="text-stone-400 hover:text-amber-400 transition-colors">
+                 +91 7007607290
+
+                </a>
+                </div>
               </li>
               <li className="flex items-center gap-3 text-sm">
                 <FiMail className="text-amber-400 flex-shrink-0" size={18} />
-                <a href="mailto:mujeebakhtar70@gmail.com" className="text-stone-400 hover:text-amber-400 transition-colors">
-                  mujeebakhtar70@gmail.com
+                <a href="mailto:info@treasuredfragrances.in" className="text-stone-400 hover:text-amber-400 transition-colors">
+                 info@treasuredfragrances.in
                 </a>
               </li>
             </ul>

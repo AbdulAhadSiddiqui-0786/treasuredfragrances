@@ -19,12 +19,10 @@ const productSchema = new mongoose.Schema(
       default: 0,
     },
     img: {
-      // Matches the 'img' field from your frontend data
       type: String,
       required: [true, 'Product image URL is required'],
     },
     imgKey: {
-      // Matches the 'imgKey' field from your frontend data
       type: String,
       required: [true, 'Product image key is required'],
     },
@@ -33,13 +31,14 @@ const productSchema = new mongoose.Schema(
       required: [true, 'Product category is required'],
       trim: true,
     },
-    stock: {
+    
+    // --- THIS IS THE FIX ---
+    isAvailable: { // CHANGED from 'stock'
       type: Boolean,
-      default: true,
+      default: true,  // RECOMMENDED: Changed from true
     },
-    // You could add more fields later, e.g.:
-    // reviews: [reviewSchema],
-    // brand: { type: String, required: true }
+    // --- END OF FIX ---
+
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt

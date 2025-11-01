@@ -1,4 +1,5 @@
 // src/pages/Products.jsx
+import axiosInstance from "../api/axiosInstance";
 import React, { useState, useEffect } from "react";
 import ProductCard from "../components/products/ProductCard";
 import { motion, AnimatePresence } from "framer-motion";
@@ -25,16 +26,14 @@ const Products = () => {
   const [stockFilter, setStockFilter] = useState("all");
   const [viewMode, setViewMode] = useState("grid"); // 'grid' or 'list'
   const [showFilters, setShowFilters] = useState(false);
+ 
 
   useEffect(() => {
     const fetchProducts = async () => {
+    
       try {
-        const res = await fetch(`${import.meta.env.VITE_API_URL}/products`);
-        if (!res.ok) {
-          throw new Error("Failed to fetch products");
-        }
-        const data = await res.json();
-        setProducts(data);
+        const res = await  axiosInstance.get("/products");
+        setProducts(res.data);
       } catch (err) {
         setError(err.message);
         console.error(err);
